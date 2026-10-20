@@ -8,7 +8,12 @@ export default defineConfig({
   expect: { timeout: 15_000 },
   fullyParallel: true,
   reporter: [['list']],
-  use: { baseURL, trace: 'retain-on-failure' },
+  use: {
+    baseURL,
+    trace: 'retain-on-failure',
+    // Point at a Chromium that is already installed, when the pinned one is not.
+    launchOptions: process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {},
+  },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
     {
